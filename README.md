@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.waynell:VideoRangeSlider:1.0.0'
+  compile 'com.github.waynell:VideoRangeSlider:1.0'
 }
 ```
 
