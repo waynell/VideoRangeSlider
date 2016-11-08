@@ -57,7 +57,7 @@ public class RangeSlider extends ViewGroup {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.RangeSlider, 0, 0);
         mThumbWidth = array.getDimensionPixelOffset(R.styleable.RangeSlider_thumbWidth, DEFAULT_THUMB_WIDTH);
-        mLineSize = array.getDimensionPixelOffset(R.styleable.RangeSlider_lineSize, DEFAULT_LINE_SIZE);
+        mLineSize = array.getDimensionPixelOffset(R.styleable.RangeSlider_lineHeight, DEFAULT_LINE_SIZE);
         mBgPaint = new Paint();
         mBgPaint.setColor(array.getColor(R.styleable.RangeSlider_maskColor, DEFAULT_MASK_BACKGROUND));
 
@@ -70,9 +70,9 @@ public class RangeSlider extends ViewGroup {
         Drawable rDrawable = array.getDrawable(R.styleable.RangeSlider_rightThumbDrawable);
         mLeftThumb = new ThumbView(context, mThumbWidth, lDrawable == null ? new ColorDrawable(DEFAULT_LINE_COLOR) : lDrawable);
         mRightThumb = new ThumbView(context, mThumbWidth, rDrawable == null ? new ColorDrawable(DEFAULT_LINE_COLOR) : rDrawable);
-        mLeftThumb.setTickIndex(DEFAULT_TICK_START);
-        mRightThumb.setTickIndex(DEFAULT_TICK_END);
-
+        setTickCount(array.getInteger(R.styleable.RangeSlider_tickCount, DEFAULT_TICK_END));
+        setRangeIndex(array.getInteger(R.styleable.RangeSlider_leftThumbIndex, DEFAULT_TICK_START),
+                array.getInteger(R.styleable.RangeSlider_rightThumbIndex, mTickCount));
         array.recycle();
 
         addView(mLeftThumb);
@@ -155,7 +155,7 @@ public class RangeSlider extends ViewGroup {
                 height, mLinePaint);
 
         if (lThumbOffset > mThumbWidth) {
-            canvas.drawRect(mThumbWidth, 0, lThumbOffset, height, mBgPaint);
+            canvas.drawRect(mThumbWidth, 0, lThumbOffset + mThumbWidth, height, mBgPaint);
         }
         if (rThumbOffset < width - mThumbWidth) {
             canvas.drawRect(rThumbOffset, 0, width, height, mBgPaint);
@@ -280,31 +280,16 @@ public class RangeSlider extends ViewGroup {
     }
 
     /**
-     * Sets the start tick in the RangeSlider.
+     * Sets the tick count in the RangeSlider.
      *
-     * @param tickInterval Integer specifying the number of ticks.
+     * @param count Integer specifying the number of ticks.
      */
-    public void setTickInterval(int tickInterval) {
-        int tickCount = (mTickEnd - mTickStart) / tickInterval;
+    public void setTickCount(int count) {
+        int tickCount = (count - mTickStart) / mTickInterval;
         if (isValidTickCount(tickCount)) {
+            mTickEnd = count;
             mTickCount = tickCount;
-            mTickInterval = tickInterval;
-        } else {
-            throw new IllegalArgumentException("tickCount less than 2; invalid tickCount.");
-        }
-    }
-
-    /**
-     * Sets the end tick in the RangeSlider.
-     *
-     * @param tickEnd Integer specifying the number of ticks.
-     */
-    public void setTickEnd(int tickEnd) {
-        int tickCount = (tickEnd - mTickStart) / mTickInterval;
-        if (isValidTickCount(tickCount)) {
-            mTickEnd = tickEnd;
-            mTickCount = tickCount;
-            mRightThumb.setTickIndex(mTickEnd);
+            mRightThumb.setTickIndex(mTickCount);
         } else {
             throw new IllegalArgumentException("tickCount less than 2; invalid tickCount.");
         }

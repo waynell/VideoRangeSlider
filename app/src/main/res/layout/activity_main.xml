@@ -21,9 +21,11 @@
         android:paddingRight="@dimen/range_thumb_width"/>
 
     <com.waynell.videorangeslider.RangeSlider
-        app:lineSize="3dp"
+        app:lineHeight="3dp"
         app:lineColor="@color/colorAccent"
         app:thumbWidth="@dimen/range_thumb_width"
+        app:tickCount="100"
+        app:leftThumbIndex="10"
         app:leftThumbDrawable="@drawable/thumb_drawable"
         app:rightThumbDrawable="@drawable/thumb_drawable"
         android:id="@+id/range_slider"

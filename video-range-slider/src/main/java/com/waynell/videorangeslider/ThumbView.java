@@ -14,7 +14,7 @@ import android.view.View;
 @SuppressLint("ViewConstructor")
 class ThumbView extends View {
 
-    private static final int EXTEND_TOUCH_SLOP = 10;
+    private static final int EXTEND_TOUCH_SLOP = 15;
 
     private final int mExtendTouchSlop;
 

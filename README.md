@@ -12,17 +12,19 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.waynell:VideoRangeSlider:1.0'
+  compile 'com.github.waynell:VideoRangeSlider:1.0.1'
 }
 ```
 
 ## Usage
-1. Add VideoRangeSlider into your layout
+1. Add VideoRangeSlider into your layout, like the following
 ```xml
 <com.waynell.videorangeslider.RangeSlider
-            app:lineSize="3dp"
+			app:lineHeight="3dp"
             app:lineColor="@color/colorAccent"
             app:thumbWidth="@dimen/range_thumb_width"
+            app:tickCount="100"
+            app:leftThumbIndex="10"
             app:leftThumbDrawable="@drawable/thumb_drawable"
             app:rightThumbDrawable="@drawable/thumb_drawable"
             android:id="@+id/range_slider"
@@ -44,11 +46,12 @@ slider.setRangeChangeListener(new RangeSlider.OnRangeChangeListener() {
 
 Developers can customize the following attributes (both via XML and programmatically):
 - line color
-- line size
-- thumb size
+- line height
+- thumb width
 - left and right thumb drawable
+- left and right thumb index
 - mask color
-
+- tick count
 
 ## License
 MIT License
